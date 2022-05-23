@@ -1,0 +1,20 @@
+[package]
+name = "keenwatch"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = "0.6.0"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = "thin"
+
+[[bin]]
+name = "keenwatch"
+path = "main.rs"
