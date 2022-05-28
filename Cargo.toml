@@ -4,7 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = "0.6.0"
+anyhow =            { version = "1.0" }
+bevy =              { version = "0.7.0" }
+bevy_ecs_tilemap =  { version = "0.6.0" }
+tiled =             { version = "0.9", default-features = false }
+
+[dev-dependencies]
 
 [profile.dev]
 opt-level = 1
@@ -18,3 +23,4 @@ lto = "thin"
 [[bin]]
 name = "keenwatch"
 path = "main.rs"
+

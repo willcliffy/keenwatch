@@ -1,11 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="8" tileheight="8" infinite="0" nextlayerid="13" nextobjectid="19">
- <tileset firstgid="1" source="jawbreaker.tsx"/>
+ <tileset firstgid="1" name="jawbreaker" tilewidth="8" tileheight="8" tilecount="72" columns="8">
+  <image source="jawbreaker_tiles.png" width="64" height="72"/>
+  <tile id="1">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="13">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="17">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="19">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="20">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="21">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="25">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="27">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="28">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="29">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="33">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="34">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="35">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="36">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="37">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="40">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="41">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  <tile id="45">
+    <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="8" height="8"/>
+    </objectgroup>
+  </tile>
+  </tileset>
  <layer id="8" name="ground" width="30" height="20">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,12,12,12,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,23,1,1,1,1,1,
-1,12,12,12,12,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,31,1,1,1,1,1,
+1,12,12,12,12,10,3221225481,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,31,1,1,1,1,1,
 1,12,12,12,12,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,23,1,1,1,1,1,
 1,12,6,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1073741839,1,1,1,1,1,
 1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -20,7 +112,7 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2147483656,1,1,1,
 1,1,1,1,1,1,1,15,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2684354571,7,6,1,
 1,1,1,1,1,1,1,23,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,12,12,12,12,1,
-1,1,1,1,1,1,1,31,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,10,12,12,12,12,1,
+1,1,1,1,1,1,1,31,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,10,12,12,12,12,1,
 1,1,1,1,1,1,1,23,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,12,12,12,12,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
