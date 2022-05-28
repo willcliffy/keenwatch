@@ -1,5 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/will/Documents/personal/keenwatch'
-cargo run --release
+cargo run
 make: Leaving directory '/home/will/Documents/personal/keenwatch'
  

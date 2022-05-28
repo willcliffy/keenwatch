@@ -46,3 +46,11 @@ pub fn update(
         transform.translation.z = sprite_pos_z;
     }
 }
+
+fn collision(
+    mut query: Query<&mut Transform, With<Player>>,
+    mut map_query: MapQuery,
+    maps: Res<Assets<super::utils::tiled::TiledMap>>,
+) {
+    
+}

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 27 18:05:38 2022
+# Make data base, printed on Sat May 28 15:54:24 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:51819
+JOURNAL_STREAM = 8:67743
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -71,9 +71,9 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 INFOPATH = /home/linuxbrew/.linuxbrew/share/info:/home/linuxbrew/.linuxbrew/share/info:
 # environment
-MANAGERPID = 2361
+MANAGERPID = 2377
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ecbae952-e8f9-4547-9c0e-1385ebe7dfc9.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-fa15476a-8e04-4a4e-b715-c9b0830e244f.sock
 # environment
 VSCODE_CWD = /home/will
 # default
@@ -83,7 +83,7 @@ PATH = /home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/rhizic:@/tmp/.ICE-unix/2663,unix/rhizic:/tmp/.ICE-unix/2663
+SESSION_MANAGER = local/rhizic:@/tmp/.ICE-unix/2679,unix/rhizic:/tmp/.ICE-unix/2679
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -93,7 +93,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = a65629151c124629aefa0745e6951f07
+INVOCATION_ID = fa455a39f42e4e06986a102beea52682
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -101,7 +101,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3333
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3576
 # automatic
 %F = $(notdir $%)
 # environment
@@ -113,7 +113,7 @@ PWD = /home/will/Documents/personal/keenwatch
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2571
+SSH_AGENT_PID = 2585
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -213,7 +213,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 3333
+VSCODE_PID = 3576
 # variable set hash-table stats:
 # Load=101/1024=10%, Rehash=0, Collisions=13/126=10%
 
@@ -223,7 +223,7 @@ VSCODE_PID = 3333
 
 # Directories
 
-# . (device 66308, inode 47452590): 13 files, no impossibilities.
+# . (device 66306, inode 47452590): 13 files, no impossibilities.
 
 # 13 files, no impossibilities in 1 directories.
 
@@ -243,7 +243,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-24 22:17:25.074909918
+#  Last modified 2022-05-27 18:18:57.302330041
 #  File has been updated.
 #  Successfully updated.
 
@@ -258,7 +258,7 @@ run:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 3):
-	cargo run --release
+	cargo run
 
 # files hash-table stats:
 # Load=5/1024=0%, Rehash=0, Collisions=0/15=0%
@@ -274,6 +274,6 @@ run:
 # strcache performance: lookups = 24 / hit rate = 20%
 # hash-table stats:
 # Load=19/8192=0%, Rehash=0, Collisions=1/24=4%
-# Finished Make data base on Fri May 27 18:05:38 2022
+# Finished Make data base on Sat May 28 15:54:24 2022
 
  

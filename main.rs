@@ -32,12 +32,13 @@ fn main() {
         .add_plugin(TiledMapPlugin)
         .add_system(bevy::input::system::exit_on_esc_system)
         .add_system(set_texture_filters_to_nearest)
-        .add_system(camera::movement)
+        //.add_system(camera::movement)
         .add_system(player::update)
-        .add_system_set(
-            SystemSet::new()
-            .with_run_criteria(FixedTimestep::step(INTERNAL_TIMESTEP))
-            .with_system(gameloop))
+        .add_system(gameloop)
+        // .add_system_set(
+        //     SystemSet::new()
+        //     .with_run_criteria(FixedTimestep::step(INTERNAL_TIMESTEP))
+        //     .with_system(gameloop))
         .run()
 }
 
@@ -78,9 +79,10 @@ fn gameloop(
     time: Res<Time>,
     keyboard_input: Res<Input<KeyCode>>,
     mut query: Query<&mut Transform, With<Player>>,
+    mut camera_query: Query<(&mut Transform, &Camera), Without<Player>>,
     mut map_query: MapQuery,
 ) {
-    dbg!("tick");
+    let (mut camera_transform, _) = camera_query.single_mut();
     for mut transform in query.iter_mut() {
         let mut direction = Vec3::ZERO;
 
@@ -100,10 +102,13 @@ fn gameloop(
             direction -= Vec3::new(0.0, 1.0, 0.0);
         }
 
-        transform.translation += time.delta_seconds() * direction * 50.;
+        let z = camera_transform.translation.z;
+        camera_transform.translation += time.delta_seconds() * direction * 75.;
+        camera_transform.translation.z = z;
 
-        let mut position = transform.translation.xy().extend(1.0);
-        position.y += 5.25; // Have calculation closer to player feet.
+        transform.translation += time.delta_seconds() * direction * 25.;
+        let position = transform.translation.xy().extend(1.0);
+        //position.y += 5.25; // Have calculation closer to player feet.
         let sprite_pos_z = map_query.get_zindex_for_pixel_pos(position, 0u16, 0u16);
         transform.translation.z = sprite_pos_z;
     }

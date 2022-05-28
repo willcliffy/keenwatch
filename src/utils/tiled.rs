@@ -148,7 +148,10 @@ pub fn process_loaded_tile_maps(
                     map.remove_layer(&mut commands, layer_id);
                 }
 
+                
+
                 for tileset in tiled_map.map.tilesets.iter() {
+                    let collider_tile_gids = tileset.tiles.iter().map(|tile| tile.id).collect::<Vec<_>>();
                     // Once materials have been created/added we need to then create the layers.
                     for layer in tiled_map.map.layers.iter() {
                         let tile_width = tileset.tile_width as f32;
@@ -232,7 +235,7 @@ pub fn process_loaded_tile_maps(
                                     ..Default::default()
                                 };
 
-                                Some(TileBundle {
+                                return Some(TileBundle {
                                     tile,
                                     ..Default::default()
                                 })
