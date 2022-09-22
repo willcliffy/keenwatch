@@ -4,10 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow =            { version = "1.0" }
-bevy =              { version = "0.7.0" }
-bevy_ecs_tilemap =  { version = "0.6.0" }
-tiled =             { version = "0.9", default-features = false }
+bevy =              { version = "0.8.1" }
 
 [dev-dependencies]
 
