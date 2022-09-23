@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May 28 15:54:24 2022
+# Make data base, printed on Fri Sep 23 16:17:35 2022
 
 # Variables
 
@@ -26,8 +26,6 @@ DESKTOP_SESSION = ubuntu
 XDG_SESSION_CLASS = user
 # environment
 XDG_SESSION_TYPE = x11
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
@@ -47,9 +45,9 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-_ = /usr/share/code/code
+_ = /usr/bin/dbus-update-activation-environment
 # environment
-JOURNAL_STREAM = 8:67743
+JOURNAL_STREAM = 8:54151
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -59,6 +57,8 @@ MAKEFILE_LIST :=  Makefile
 # environment
 GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # environment
+OMF_PATH = /home/will/.local/share/omf
+# environment
 USERNAME = will
 # environment
 MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
@@ -67,33 +67,27 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
-VSCODE_VERBOSE_LOGGING = true
+INFOPATH = /home/linuxbrew/.linuxbrew/share/info:
 # environment
-INFOPATH = /home/linuxbrew/.linuxbrew/share/info:/home/linuxbrew/.linuxbrew/share/info:
-# environment
-MANAGERPID = 2377
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-fa15476a-8e04-4a4e-b715-c9b0830e244f.sock
+MANAGERPID = 2667
 # environment
 VSCODE_CWD = /home/will
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/will/.cargo/bin:/home/will/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/will/.cargo/bin:/home/will/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/rhizic:@/tmp/.ICE-unix/2679,unix/rhizic:/tmp/.ICE-unix/2679
+SESSION_MANAGER = local/rhizic:@/tmp/.ICE-unix/2974,unix/rhizic:/tmp/.ICE-unix/2974
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
-VSCODE_LOG_STACK = false
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = fa455a39f42e4e06986a102beea52682
+INVOCATION_ID = cbd1aa06203f44559d696b1045e14e37
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -101,25 +95,23 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3576
+GIO_LAUNCHED_DESKTOP_FILE_PID = 54190
 # automatic
 %F = $(notdir $%)
 # environment
 DISPLAY = :0
 # environment
-VSCODE_PIPE_LOGGING = true
-# environment
 PWD = /home/will/Documents/personal/keenwatch
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2585
+SSH_AGENT_PID = 2882
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
 GTK_MODULES = gail:atk-bridge
 # environment
-MANPATH = /home/linuxbrew/.linuxbrew/share/man:/home/linuxbrew/.linuxbrew/share/man::
+MANPATH = /home/linuxbrew/.linuxbrew/share/man:
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -127,7 +119,7 @@ HOME = /home/will
 # environment
 HOMEBREW_CELLAR = /home/linuxbrew/.linuxbrew/Cellar
 # environment
-VSCODE_CODE_CACHE_PATH = /home/will/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /home/will/.config/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
 # environment
 LOGNAME = will
 # environment
@@ -147,7 +139,7 @@ MAKECMDGOALS := all
 # environment
 QT_IM_MODULE = ibus
 # environment
-SHLVL = 0
+SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # default
@@ -158,6 +150,8 @@ USER = will
 .DEFAULT_GOAL := run
 # environment
 XDG_CURRENT_DESKTOP = Unity
+# environment
+OMF_CONFIG = /home/will/.config/omf
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
@@ -167,7 +161,7 @@ MAKE_COMMAND := make
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-9b79e0ee-1.67.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-9b79e0ee-1.71.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -213,9 +207,9 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 3576
+VSCODE_PID = 54190
 # variable set hash-table stats:
-# Load=101/1024=10%, Rehash=0, Collisions=13/126=10%
+# Load=98/1024=10%, Rehash=0, Collisions=13/123=11%
 
 # Pattern-specific Variable Values
 
@@ -223,9 +217,9 @@ VSCODE_PID = 3576
 
 # Directories
 
-# . (device 66306, inode 47452590): 13 files, no impossibilities.
+# . (device 66307, inode 47452590): 11 files, no impossibilities.
 
-# 13 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -268,12 +262,12 @@ run:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 150 B / avg = 7 B
-# current buf: size = 8162 B / used = 150 B / count = 19 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 17 / storage = 141 B / avg = 8 B
+# current buf: size = 8162 B / used = 141 B / count = 17 / avg = 8 B
 
-# strcache performance: lookups = 24 / hit rate = 20%
+# strcache performance: lookups = 22 / hit rate = 22%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=1/24=4%
-# Finished Make data base on Sat May 28 15:54:24 2022
+# Load=17/8192=0%, Rehash=0, Collisions=1/22=5%
+# Finished Make data base on Fri Sep 23 16:17:35 2022
 
  

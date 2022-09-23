@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy =              { version = "0.8.1" }
+bevy = { version = "0.8.1" }
+bevy_rapier3d = "0.16.2"
 
 [dev-dependencies]
 
@@ -20,4 +21,3 @@ lto = "thin"
 [[bin]]
 name = "keenwatch"
 path = "main.rs"
-
