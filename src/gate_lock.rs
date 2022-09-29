@@ -95,29 +95,42 @@ pub fn setup(
 
 pub fn animate_lights(
     time: Res<Time>,
-    mut lights: Query<(&mut PointLight, &mut GateLock)>,
+    mut lights: Query<(&mut PointLight, &mut Visibility, &mut GateLock)>,
 ) {
-    for (mut light, mut lock) in lights.iter_mut() {
+    for (mut light, mut visibility, mut lock) in lights.iter_mut() {
         if lock.unlocked {
-            println!("unlocked");
-            light.color = Color::rgb(0.0, 1.0, 0.0);
-            light.range = 10.0;
+            if lock.time_since_pressed < 3.25 {
+                light.color = Color::rgb(1.0, 1.0, 1.0)
+            } else {
+                light.color = Color::rgb(0.0, 1.0, 0.0);
+            }
             continue;
         }
 
         if lock.pressed {
-            println!("Pressed");
+            if lock.time_since_pressed == 0.0 {
+                visibility.is_visible = true;
+            }
+
             lock.time_since_pressed += time.delta_seconds();
             if lock.time_since_pressed > 3.0 {
                 lock.pressed = false;
-                lock.time_since_pressed = 0.0;
                 lock.unlocked = true;
                 continue
             }
-            light.color = Color::rgb(0.0, 0.0, 1.0) + Color::rgb(0.5, 0.5, 0.0) * lock.time_since_pressed.sin();
+
+            // slowly turn green as the gate is unlocked
+            let percent_unlocked_radians = (lock.time_since_pressed / 3.0) * (std::f32::consts::PI / 2.0);
+            light.color = Color::rgb(0.0, 0.0, 1.0)
+                + Color::rgb(0.0, 1.0, 0.0) * percent_unlocked_radians.sin() 
+                + Color::rgb(0.0, 0.0, 1.0) * -percent_unlocked_radians.sin();
             continue;
+        } else {
+            if lock.time_since_pressed > 0.0 {
+                visibility.is_visible = false;
+                lock.time_since_pressed = 0.0;
+            }
         }
 
-        println!("nothing");
     }
 }

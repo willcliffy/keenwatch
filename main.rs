@@ -43,14 +43,7 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let ground_size = 75.0;
-    commands.spawn_bundle(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Plane { size: ground_size })),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
-        transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
-        ..default()
-    }).insert(Collider::cuboid(ground_size / 2.0, 0.0, ground_size / 2.0));
-
+    // Lights
     commands.spawn_bundle(DirectionalLightBundle {
         directional_light: DirectionalLight {
             illuminance: 30000.0,
@@ -60,6 +53,52 @@ fn setup(
         transform: Transform::from_rotation(Quat::from_rotation_x(-std::f32::consts::FRAC_PI_4)),
         ..default()
     });
+
+    // Ground
+    let ground_size = 75.0;
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Plane { size: ground_size })),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
+        ..default()
+    }).insert(Collider::cuboid(ground_size / 2.0, 0.0, ground_size / 2.0));
+
+    // Walls
+    let wall_size = 75.0;
+    let wall_thickness = 1.0;
+    let wall_height = 10.0;
+
+    // Front
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_size, wall_height, wall_thickness))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(0.0, wall_height / 2.0, wall_size / 2.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_size / 2.0, wall_height / 2.0, wall_thickness / 2.0));
+
+    // Back
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_size, wall_height, wall_thickness))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(0.0, wall_height / 2.0, -wall_size / 2.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_size / 2.0, wall_height / 2.0, wall_thickness / 2.0));
+
+    // Left
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_thickness, wall_height, wall_size))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(-wall_size / 2.0, wall_height / 2.0, 0.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_thickness / 2.0, wall_height / 2.0, wall_size / 2.0));
+
+    // Right
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_thickness, wall_height, wall_size))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(wall_size / 2.0, wall_height / 2.0, 0.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_thickness / 2.0, wall_height / 2.0, wall_size / 2.0));
 }
 
 fn handle_collisions(
