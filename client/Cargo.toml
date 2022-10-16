@@ -1,0 +1,24 @@
+[package]
+name = "keenwatch"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { version = "0.8.1" }
+bevy_rapier3d = "0.16.2"
+bevy-inspector-egui = "0.13.0"
+
+[dev-dependencies]
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = "thin"
+
+[[bin]]
+name = "keenwatch"
+path = "src/main.rs"
