@@ -1,115 +1,148 @@
-use bevy::{
-    prelude::*,
-    core::FixedTimestep,
-    math::Vec3Swizzles,
-};
-use bevy_ecs_tilemap::prelude::*;
+use bevy::prelude::*;
+use bevy_rapier3d::prelude::*;
+use gate_lock::GateLock;
 
-use crate::src::{
-    utils::camera,
-    utils::tiled::*,
-    utils::texture::set_texture_filters_to_nearest,
-    player,
-    player::Player,
-};
+#[path = "src/camera.rs"] mod camera;
+#[path = "src/player.rs"] mod player;
+#[path = "src/gate_lock.rs"] mod gate_lock;
 
-mod src;
-
-const INTERNAL_TIMESTEP: f64 = 60.0 / 60.0;
-const CAMERA_SCALE: f32 = 0.2;
+#[derive(Component)]
+pub struct GameComponents {
+    pub player_entity_id: u32,
+    pub cube_entity_id: u32
+}
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .insert_resource(WindowDescriptor {
-            width: 1270.0,
-            height: 720.0,
-            title: String::from("Keenwatch"),
-            ..Default::default()
+        .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
+        .add_plugin(RapierDebugRenderPlugin::default())
+        .insert_resource(GameComponents {
+            player_entity_id: 0,
+            cube_entity_id: 0
         })
-        .add_startup_system(startup)
-        .add_plugin(TilemapPlugin)
-        .add_plugin(TiledMapPlugin)
-        .add_system(bevy::input::system::exit_on_esc_system)
-        .add_system(set_texture_filters_to_nearest)
-        //.add_system(camera::movement)
-        .add_system(player::update)
-        .add_system(gameloop)
-        // .add_system_set(
-        //     SystemSet::new()
-        //     .with_run_criteria(FixedTimestep::step(INTERNAL_TIMESTEP))
-        //     .with_system(gameloop))
-        .run()
+        .add_startup_system_set(
+            SystemSet::new()
+                .with_system(setup)
+                .with_system(camera::setup)
+                .with_system(player::setup)
+                .with_system(gate_lock::setup)
+        )
+        .add_system_set(
+            SystemSet::new()
+                .with_system(camera::handle_input)
+                .with_system(player::handle_input)
+                .with_system(gate_lock::animate_lights)
+        )
+        .add_system_to_stage(CoreStage::PostUpdate, handle_collisions)
+        .run();
 }
 
-fn startup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let mut camera = OrthographicCameraBundle::new_2d();
-
-    camera.orthographic_projection.scale = CAMERA_SCALE;
-
-    commands.spawn_bundle(camera);
-
-    let handle: Handle<TiledMap> = asset_server.load("map3.tmx");
-
-    let map_entity = commands.spawn().id();
-
-    commands.entity(map_entity).insert_bundle(TiledMapBundle {
-        tiled_map: handle,
-        map: Map::new(0u16, map_entity),
-        transform: Transform::from_xyz(0.0, 0.0, 0.0),
-        ..Default::default()
+fn setup(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    // Lights
+    commands.spawn_bundle(DirectionalLightBundle {
+        directional_light: DirectionalLight {
+            illuminance: 30000.0,
+            shadows_enabled: true,
+            ..default()
+        },
+        transform: Transform::from_rotation(Quat::from_rotation_x(-std::f32::consts::FRAC_PI_4)),
+        ..default()
     });
 
-    commands.spawn_bundle(SpriteBundle {
-        transform: Transform {
-            translation: Vec3::new(10.0, 10.0, 0.0),
-            scale: Vec3::new(8.0, 8.0, 0.0),
-            ..Default::default()
-        },
-        sprite: Sprite {
-            color: Color::rgb(0.5, 0.5, 2.0),
-            ..Default::default()
-        },
-        ..Default::default()
-    })
-    .insert(Player);
+    // Ground
+    let ground_size = 75.0;
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Plane { size: ground_size })),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
+        ..default()
+    }).insert(Collider::cuboid(ground_size / 2.0, 0.0, ground_size / 2.0));
+
+    // Walls
+    let wall_size = 75.0;
+    let wall_thickness = 1.0;
+    let wall_height = 10.0;
+
+    // Front
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_size, wall_height, wall_thickness))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(0.0, wall_height / 2.0, wall_size / 2.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_size / 2.0, wall_height / 2.0, wall_thickness / 2.0));
+
+    // Back
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_size, wall_height, wall_thickness))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(0.0, wall_height / 2.0, -wall_size / 2.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_size / 2.0, wall_height / 2.0, wall_thickness / 2.0));
+
+    // Left
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_thickness, wall_height, wall_size))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(-wall_size / 2.0, wall_height / 2.0, 0.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_thickness / 2.0, wall_height / 2.0, wall_size / 2.0));
+
+    // Right
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Box::new(wall_thickness, wall_height, wall_size))),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_translation(Vec3::new(wall_size / 2.0, wall_height / 2.0, 0.0)),
+        ..default()
+    }).insert(Collider::cuboid(wall_thickness / 2.0, wall_height / 2.0, wall_size / 2.0));
 }
 
-fn gameloop(
-    time: Res<Time>,
-    keyboard_input: Res<Input<KeyCode>>,
-    mut query: Query<&mut Transform, With<Player>>,
-    mut camera_query: Query<(&mut Transform, &Camera), Without<Player>>,
-    mut map_query: MapQuery,
+fn handle_collisions(
+    game_components: Res<GameComponents>,
+    mut gates: Query<(&mut GateLock, &mut Visibility)>,
+    mut collision_events: EventReader<CollisionEvent>,
 ) {
-    let (mut camera_transform, _) = camera_query.single_mut();
-    for mut transform in query.iter_mut() {
-        let mut direction = Vec3::ZERO;
+    for collision_event in collision_events.iter() {
+        match collision_event {
+            CollisionEvent::Started(entity_a, entity_b, _) => {
+                if entity_a.id() != game_components.player_entity_id && entity_b.id() != game_components.player_entity_id {
+                    continue;
+                }
 
-        if keyboard_input.pressed(KeyCode::Left) {
-            direction -= Vec3::new(1.0, 0.0, 0.0);
+                // TODO - this will break when I want the gates to act indivudually
+                if entity_a.id() != game_components.cube_entity_id && entity_b.id() != game_components.cube_entity_id {
+                    continue;
+                }
+
+                println!("Collision started between {:?} and {:?}", entity_a, entity_b);
+                for (mut gate, mut gate_vis) in gates.iter_mut() { // started colliding with one of the gates - for now, this activates all gates
+                    println!("Gate collision started");
+                    gate.pressed = true;
+                    gate_vis.is_visible = true;
+                }
+            }
+            CollisionEvent::Stopped(entity_a, entity_b, _) => {
+                if entity_a.id() != game_components.player_entity_id && entity_b.id() != game_components.player_entity_id {
+                    continue;
+                }
+
+                // TODO - this will break when I want the gates to act indivudually
+                if entity_a.id() != game_components.cube_entity_id && entity_b.id() != game_components.cube_entity_id {
+                    continue;
+                }
+
+                for (mut gate, mut gate_vis) in gates.iter_mut() { // started colliding with one of the gates - for now, this activates all gates
+                    println!("Gate collision stopped");
+                    gate.pressed = false;
+                    if !gate.unlocked {
+                        gate_vis.is_visible = false;
+                    }
+                }
+            }
         }
-
-        if keyboard_input.pressed(KeyCode::Right) {
-            direction += Vec3::new(1.0, 0.0, 0.0);
-        }
-
-        if keyboard_input.pressed(KeyCode::Up) {
-            direction += Vec3::new(0.0, 1.0, 0.0);
-        }
-
-        if keyboard_input.pressed(KeyCode::Down) {
-            direction -= Vec3::new(0.0, 1.0, 0.0);
-        }
-
-        let z = camera_transform.translation.z;
-        camera_transform.translation += time.delta_seconds() * direction * 75.;
-        camera_transform.translation.z = z;
-
-        transform.translation += time.delta_seconds() * direction * 25.;
-        let position = transform.translation.xy().extend(1.0);
-        //position.y += 5.25; // Have calculation closer to player feet.
-        let sprite_pos_z = map_query.get_zindex_for_pixel_pos(position, 0u16, 0u16);
-        transform.translation.z = sprite_pos_z;
     }
 }

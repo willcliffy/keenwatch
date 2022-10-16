@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 bevy = { version = "0.8.1" }
 bevy_rapier3d = "0.16.2"
+bevy-inspector-egui = "0.13.0"
 
 [dev-dependencies]
 
@@ -20,4 +21,4 @@ lto = "thin"
 
 [[bin]]
 name = "keenwatch"
-path = "main.rs"
+path = "src/main.rs"
