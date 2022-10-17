@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 
-#[derive(Component)]
 pub struct MapPlugin;
 
 impl Plugin for MapPlugin {

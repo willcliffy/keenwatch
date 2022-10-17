@@ -7,7 +7,6 @@ use crate::{
     map::MapOptions,
 };
 
-#[derive(Component)]
 pub struct GatePlugin;
 
 impl Plugin for GatePlugin {

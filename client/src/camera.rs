@@ -1,8 +1,7 @@
 use bevy::{input::mouse::MouseWheel, prelude::*};
 
-use super::player::PlayerType;
+use crate::player::LocalPlayer;
 
-#[derive(Component)]
 pub struct KeenwatchCameraPlugin;
 
 impl Plugin for KeenwatchCameraPlugin {
@@ -11,38 +10,27 @@ impl Plugin for KeenwatchCameraPlugin {
     }
 }
 
-#[derive(Component)]
-struct KeenwatchCamera {
-    zoom: f32,
-    zoom_speed: f32,
-    zoom_dx_dz: f32,
-}
-
 fn setup(mut commands: Commands) {
-    commands
-        .spawn_bundle(Camera3dBundle {
-            transform: Transform::from_xyz(0.0, 100.0, 80.0).looking_at(Vec3::ZERO, Vec3::Y),
-            ..default()
-        })
-        .insert(KeenwatchCamera {
-            zoom: 80.0,
-            zoom_speed: 500.0,
-            zoom_dx_dz: 0.8,
-        });
+    commands.spawn_bundle(Camera3dBundle {
+        transform: Transform::from_rotation(Quat::from_rotation_x(-0.5)),
+        ..default()
+    });
 }
 
 fn handle_input(
     time: Res<Time>,
+    keyboard_input: Res<Input<KeyCode>>,
     mut scroll_evr: EventReader<MouseWheel>,
-    mut camera_query: Query<(&mut KeenwatchCamera, &mut Transform), With<Camera>>,
-    player: Query<&Transform, (With<PlayerType>, Without<Camera>)>,
+    mut camera_query: Query<&mut Transform, With<Camera>>,
+    player: Query<&Transform, (With<LocalPlayer>, Without<Camera>)>,
 ) {
+    // always follow the player
     let player_transform = player.single();
-    let (mut cam, mut camera_t) = camera_query.single_mut();
-    camera_t.translation =
-        player_transform.translation.clone() + Vec3::new(0.0, cam.zoom, cam.zoom * cam.zoom_dx_dz);
+    let mut transform = camera_query.single_mut();
+    transform.translation = player_transform.translation + Vec3::new(0.0, 50.0, 50.0);
+    transform.look_at(player_transform.translation, Vec3::Y);
 
-    for ev in scroll_evr.iter() {
-        cam.zoom -= ev.y * cam.zoom_speed * time.delta_seconds();
-    }
+    // there are two additional possible inputs to control the camera
+    // 1. scroll wheel to zoom in and out
+    // 2. wasd to rotate the camera around the player
 }

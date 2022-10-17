@@ -1,9 +1,8 @@
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 
-use crate::{gate::GateSide, map::MapOptions, player::PlayerType};
+use crate::{gate::GateSide, map::MapOptions, player::LocalPlayer};
 
-#[derive(Component)]
 pub struct LockPlugin;
 
 impl Plugin for LockPlugin {
@@ -146,7 +145,7 @@ fn animate(time: Res<Time>, mut lights: Query<(&mut PointLight, &mut GateLock)>)
 }
 
 fn handle_collisions(
-    player: Query<&Transform, With<PlayerType>>,
+    player: Query<&Transform, With<LocalPlayer>>,
     mut gates: Query<(&mut GateLock, &mut Visibility)>,
     mut collision_events: EventReader<CollisionEvent>,
 ) {
